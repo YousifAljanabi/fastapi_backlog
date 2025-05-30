@@ -1,8 +1,12 @@
+from fastapi import Depends
+from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
 from typing import AsyncGenerator
 import os
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
+from app.db.models import User
 
 load_dotenv()
 
@@ -18,3 +22,6 @@ Base = declarative_base()
 async def get_session() -> AsyncGenerator[AsyncSession, None]:
     async with session_maker() as session:
         yield session
+
+async def get_user_db(session: AsyncSession = Depends(get_session)):
+    yield SQLAlchemyUserDatabase(session, User)
