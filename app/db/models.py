@@ -1,7 +1,7 @@
 import enum
 
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTableUUID
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
@@ -39,7 +39,7 @@ class Epic(Base):
 class Task(Base):
     __tablename__ = "tasks"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    epic_id = Column(UUID(as_uuid=True), nullable=False)
+    epic_id = Column(UUID(as_uuid=True), ForeignKey("epics.id"), nullable=False)
 
     hours_estimate = Column(Integer, nullable=False)
     hours_spent = Column(Integer, nullable=False, default=0)
