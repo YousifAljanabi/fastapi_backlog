@@ -41,6 +41,8 @@ class Task(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     epic_id = Column(UUID(as_uuid=True), ForeignKey("epics.id"), nullable=False)
 
+    title = Column(String, nullable=False)
+
     hours_estimate = Column(Integer, nullable=False)
     hours_spent = Column(Integer, nullable=False, default=0)
 
