@@ -12,13 +12,13 @@ Base = declarative_base()
 
 
 class EpicStatus(enum.Enum):
-    OPEN = "open"
-    DONE = "done"
+    OPEN = "Open"
+    DONE = "Done"
 
 class TaskStatus(enum.Enum):
-    TODO = "todo"
-    DOING = "doing"
-    DONE = "done"
+    TODO = "Todo"
+    DOING = "Doing"
+    DONE = "Done"
 
 
 class User(SQLAlchemyBaseUserTableUUID, Base):
@@ -28,7 +28,7 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
 class Epic(Base):
     __tablename__ = "epics"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    title = Column(String, unique=True)
+    title = Column(String, nullable=False)
     owner_email = Column(String, nullable=False)
     status = Column(Enum(EpicStatus), default=EpicStatus.OPEN)
 
